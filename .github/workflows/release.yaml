@@ -29,4 +29,7 @@ jobs:
           echo '${{ secrets.GITHUB_TOKEN }}' | docker login ghcr.io --username ${{ github.actor }} --password-stdin  
           
           echo "building ... "
-          make TAG=1.5.1 PLATFORM=linux/amd64 REGISTRY=ghcr.io USERNAME=djeebus PUSH=true nonfree-kmod-nvidia-grid nvidia-grid-container-toolkit 
+          make TAG=1.5.1 PLATFORM=linux/amd64 REGISTRY=ghcr.io USERNAME=djeebus PUSH=true \
+            nonfree-kmod-nvidia-grid \
+            nvidia-grid-fabricmanager \
+            nvidia-grid-container-toolkit 
