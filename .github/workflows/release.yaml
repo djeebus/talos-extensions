@@ -1,0 +1,32 @@
+name: build extensions
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        type: string
+        required: true
+        description: Talos version
+
+jobs:
+  build-release:
+    runs-on: ubuntu-22.04
+
+    permissions:
+      contents: write
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: docker/setup-buildx-action@v2
+
+      - shell: bash
+        run: |
+          set -e
+          
+          echo "logging into ghcr.io ... "
+          echo '${{ secrets.GITHUB_TOKEN }}' | docker login ghcr.io --username ${{ github.actor }} --password-stdin  
+          
+          echo "building ... "
+          make TAG=1.5.1 PLATFORM=linux/amd64 REGISTRY=ghcr.io USERNAME=djeebus PUSH=true nonfree-kmod-nvidia-grid nvidia-grid-container-toolkit 

@@ -25,7 +25,6 @@ PLATFORM ?= linux/amd64,linux/arm64
 PROGRESS ?= auto
 PUSH ?= false
 COMMON_ARGS := --file=Pkgfile
-COMMON_ARGS += --provenance=false
 COMMON_ARGS += --progress=$(PROGRESS)
 COMMON_ARGS += --platform=$(PLATFORM)
 COMMON_ARGS += --build-arg=http_proxy=$(http_proxy)
@@ -53,8 +52,11 @@ TARGETS = \
 		iscsi-tools \
 		nut-client \
 		nvidia-container-toolkit \
+		nvidia-grid-container-toolkit \
 		nvidia-fabricmanager \
+		nvidia-grid-fabricmanager \
 		nvidia-open-gpu-kernel-modules \
+		nvidia-grid-open-gpu-kernel-modules \
 		qemu-guest-agent \
 		tailscale \
 		thunderbolt \
@@ -67,6 +69,7 @@ TARGETS = \
 
 NONFREE_TARGETS = \
 	nonfree-kmod-nvidia \
+	nonfree-kmod-nvidia-grid \
 
 all: $(TARGETS) ## Builds all known pkgs.
 
