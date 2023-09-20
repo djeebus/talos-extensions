@@ -1,0 +1,28 @@
+name: nvidia-grid-container-toolkit
+variant: scratch
+shell: /toolchain/bin/bash
+dependencies:
+  - stage: base
+  - stage: nvidia-grid-container-cli
+  - stage: elfutils
+  - stage: zlib
+  - stage: libcap
+  - stage: libseccomp
+  - stage: libtirpc
+  - stage: nvidia-grid-container-runtime
+  - stage: nvidia-grid-container-runtime-wrapper
+  - stage: nvidia-grid-persistenced-wrapper
+steps:
+  - prepare:
+      - |
+        sed -i 's#$VERSION#{{ .VERSION }}#' /pkg/manifest.yaml
+    install:
+      - |
+        mkdir -p /rootfs
+finalize:
+  - from: /rootfs
+    to: /rootfs
+  - from: /pkg/nvidia-persistenced.yaml
+    to: /rootfs/usr/local/etc/containers/nvidia-persistenced.yaml
+  - from: /pkg/manifest.yaml
+    to: /

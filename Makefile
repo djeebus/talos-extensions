@@ -1,7 +1,7 @@
 REGISTRY ?= ghcr.io
 USERNAME ?= siderolabs
 SHA ?= $(shell git describe --match=none --always --abbrev=8 --dirty)
-TAG ?= $(shell git describe --tag --always --dirty)
+TAG ?= $(shell git describe --tag --always)
 BRANCH ?= $(shell git rev-parse --abbrev-ref HEAD)
 REGISTRY_AND_USERNAME := $(REGISTRY)/$(USERNAME)
 # inital commit time
@@ -49,6 +49,7 @@ TARGETS = \
 		intel-ucode \
 		iscsi-tools \
 		nut-client \
+		nvidia-grid-container-toolkit \
 		nvidia-container-toolkit \
 		nvidia-fabricmanager \
 		nvidia-open-gpu-kernel-modules \
@@ -63,6 +64,7 @@ TARGETS = \
 
 NONFREE_TARGETS = \
 	nonfree-kmod-nvidia \
+	nonfree-kmod-nvidia-grid
 
 all: $(TARGETS) ## Builds all known pkgs.
 
