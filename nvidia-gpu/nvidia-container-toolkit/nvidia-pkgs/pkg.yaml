@@ -9,7 +9,19 @@ dependencies:
   # so any stage depending on nvidia-pkgs will have the updated cache
   - stage: glibc
 steps:
-  - prepare:
+  - sources:
+      # {{ if eq .ARCH "aarch64" }} This in fact is YAML comment, but Go templating instruction is evaluated by bldr
+      - url: https://download.nvidia.com/XFree86/Linux-aarch64/{{ .NVIDIA_DRIVER_VERSION }}/NVIDIA-Linux-aarch64-{{ .NVIDIA_DRIVER_VERSION }}.run
+        destination: nvidia.run
+        sha256: 494c56fd9f2c249edb73fca1a334e1f1677680a2ec9e22702a65e1d6d270526f
+        sha512: 57b06a6fa16838176866c364a8722c546084529ad91c57e979aca7750692127cab1485b5a44aee398c5494782ed987e82f66061aa39e802bc6eefa2b40a33bc3
+      # {{ else }} This in fact is YAML comment, but Go templating instruction is evaluated by bldr
+      - url: https://download.nvidia.com/XFree86/Linux-x86_64/{{ .NVIDIA_DRIVER_VERSION }}/NVIDIA-Linux-x86_64-{{ .NVIDIA_DRIVER_VERSION }}-no-compat32.run
+        destination: nvidia.run
+        sha256: 1501513bc124956f8b8088a2220878a0bd944d6ea2457fc08e1c3b9f1c2896ed
+        sha512: bfa7bdea4db568d7d110fad27c73e855288eae9820bb6cfdbbc5a6416aeb5ab6602372c40e83e46ef9360b65a6a57b8827697bce441d0c19cf7f06c6383c23ed
+    # {{ end }} This in fact is YAML comment, but Go templating instruction is evaluated by bldr
+    prepare:
       - |
         # the nvidia installer validates these packages are installed
         ln -s /bin/true /bin/modprobe
@@ -17,7 +29,7 @@ steps:
         ln -s /bin/true /bin/lsmod
         ln -s /bin/true /bin/depmod
 
-        bash /pkg/files/NVIDIA-Linux-x86_64-{{ .NVIDIA_GRID_DRIVER_VERSION }}-grid.run --extract-only
+        bash nvidia.run --extract-only
     install:
       - |
         mkdir -p /rootfs/usr/local \

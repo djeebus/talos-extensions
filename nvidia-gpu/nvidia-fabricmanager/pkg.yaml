@@ -13,8 +13,8 @@ steps:
     # {{ else }} This in fact is YAML comment, but Go templating instruction is evaluated by bldr
       - url: https://developer.download.nvidia.com/compute/nvidia-driver/redist/fabricmanager/linux-x86_64/fabricmanager-linux-x86_64-{{ .NVIDIA_DRIVER_VERSION }}-archive.tar.xz
         destination: fabricmanager.tar.xz
-        sha256: a04f72d5491d102e402d48f91096272276caf38c868852ad5d13a151bcb41a62
-        sha512: d5f7cad75015b943da7b3e0cc7fada25f12f7a32cf65f68705ebd8a63edc0d7fe5c77f931a3555b807cd4b97a272237decd0c92213b674a71a41b94798cc0abf
+        sha256: fb48fcb427ff111065345654d8da3ad71322148541045be4e00bc7c93de8371c
+        sha512: e143a6405b1452257b2aafea7f9dc2400fb7199df2296d841f913c68a073c869f6468aca6057dc30741ec0d66b6bae56b284692046f38f5fe8d0e7cfdf5fa93b
     # {{ end }} This in fact is YAML comment, but Go templating instruction is evaluated by bldr
     prepare:
       - |

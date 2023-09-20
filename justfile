@@ -19,6 +19,15 @@ build-and-push PKGS='':
     nonfree
 
 dump TARGET:
+  #!/usr/bin/env bash
+
+  pushd ../talos-pkgs && PKGS=$(git describe --tag --always --dirty) && popd
+
   make \
-    local-{{ TARGET }} \
-    DEST=_out
+    PKGS=${PKGS} \
+    TAG=v1.5.1 \
+    PLATFORM=linux/amd64 \
+    REGISTRY=ghcr.io \
+    USERNAME=djeebus/talos \
+    DEST=_out \
+    local-{{ TARGET }}
